@@ -2,8 +2,8 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/[Ll]ibrary/
-/[Tt]emp/
+GGJ2020/[Ll]ibrary/
+GGJ2020/[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/

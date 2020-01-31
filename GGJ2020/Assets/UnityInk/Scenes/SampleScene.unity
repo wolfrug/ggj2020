@@ -273,6 +273,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a16a9f6cf0d6c044b8d18efd10e2a95, type: 3}
+--- !u!223 &357470625 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2188562310579963737, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 793948575}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &447820685 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2188562310579963737, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2188562308859047029}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +380,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 54898254}
     m_Modifications:
+    - target: {fileID: 2188562309150276971, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
+        type: 3}
+      propertyPath: m_Name
+      value: InkWriterAlt
+      objectReference: {fileID: 0}
     - target: {fileID: 2188562309150276949, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -463,11 +480,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 340
       objectReference: {fileID: 0}
-    - target: {fileID: 2188562309150276971, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
-        type: 3}
-      propertyPath: m_Name
-      value: InkWriterAlt
-      objectReference: {fileID: 0}
     - target: {fileID: 2188562309150276970, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
       propertyPath: linkClickedEvent.m_PersistentCalls.m_Calls.Array.size
@@ -481,7 +493,7 @@ PrefabInstance:
     - target: {fileID: 2188562309150276970, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
       propertyPath: clickToContinue
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2188562309150276970, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
@@ -530,6 +542,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1082362054044353622, guid: 4235f1438abcc9e4f967104a48db3011,
         type: 3}
+    - target: {fileID: 2188562309150276970, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
+        type: 3}
+      propertyPath: writerCanvas
+      value: 
+      objectReference: {fileID: 357470625}
     - target: {fileID: 2188562310441288552, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
       propertyPath: intVariableChangedEvents.Array.size
@@ -627,7 +644,7 @@ PrefabInstance:
     - target: {fileID: 2188562308787731787, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -372.49985
+      value: -372.49994
       objectReference: {fileID: 0}
     - target: {fileID: 2188562308787731787, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
@@ -1466,6 +1483,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2188562309150276971, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
+        type: 3}
+      propertyPath: m_Name
+      value: InkWriter
+      objectReference: {fileID: 0}
     - target: {fileID: 2188562309150276949, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1561,11 +1583,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 340
       objectReference: {fileID: 0}
-    - target: {fileID: 2188562309150276971, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
-        type: 3}
-      propertyPath: m_Name
-      value: InkWriter
-      objectReference: {fileID: 0}
     - target: {fileID: 2188562309150276970, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
       propertyPath: linkClickedEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1611,6 +1628,11 @@ PrefabInstance:
       propertyPath: altTextArea
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2188562309150276970, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
+        type: 3}
+      propertyPath: writerCanvas
+      value: 
+      objectReference: {fileID: 447820685}
     - target: {fileID: 2188562310441288552, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
       propertyPath: intVariableChangedEvents.Array.size
@@ -1698,7 +1720,7 @@ PrefabInstance:
     - target: {fileID: 2188562308787731787, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1021.29987
+      value: -1021.2999
       objectReference: {fileID: 0}
     - target: {fileID: 2188562308787731787, guid: 1c06eb21a5ec3b2429a89eeace264e2e,
         type: 3}

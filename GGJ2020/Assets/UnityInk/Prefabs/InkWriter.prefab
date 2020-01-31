@@ -386,6 +386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainWriter: 1
   inkStoryObject: {fileID: 11400000, guid: ad7fd507368d8b54ca19aebf98d1945c, type: 2}
+  writerCanvas: {fileID: 2188562310579963737}
   textArea: {fileID: 2188562308787731784}
   textPrefab: {fileID: 7839342851535944884, guid: af73fe4bc0b091e4898cbc24d86be35e,
     type: 3}
@@ -396,6 +397,7 @@ MonoBehaviour:
   background: {fileID: 2188562310272334107}
   continueButton: {fileID: 0}
   clickToContinue: 0
+  hideWhenFinished: 1
   tagEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -934,6 +936,7 @@ GameObject:
   - component: {fileID: 2188562310579963737}
   - component: {fileID: 2188562310579963742}
   - component: {fileID: 2188562310579963743}
+  - component: {fileID: 1352473962807712149}
   m_Layer: 5
   m_Name: WriterCanvas
   m_TagString: Untagged
@@ -1022,6 +1025,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &1352473962807712149
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2188562310579963740}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2188562310767913076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,6 +1162,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
+        type: 3}
+      propertyPath: m_text
+      value: option button text option button textoption button textoption button
+        textoption button textoption button textoption button text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3727119977665911364, guid: 62ef996e5b114ee45a2fba9113fb3286,
         type: 3}
@@ -1277,32 +1318,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 207.76
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
-        type: 3}
-      propertyPath: m_text
-      value: option button text option button textoption button textoption button
-        textoption button textoption button textoption button text
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 127
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432329674218182191, guid: 62ef996e5b114ee45a2fba9113fb3286,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62ef996e5b114ee45a2fba9113fb3286, type: 3}

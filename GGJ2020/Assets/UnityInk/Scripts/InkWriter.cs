@@ -22,6 +22,10 @@ public class InkWriter : MonoBehaviour {
 	public Story story;
 
 	[SerializeField]
+	private Canvas writerCanvas;
+	private CanvasGroup writerCanvasGroup;
+
+	[SerializeField]
 	private GameObject textArea;
 
 	// UI Prefabs
@@ -37,6 +41,7 @@ public class InkWriter : MonoBehaviour {
 	public Image background;
 	public Button continueButton;
 	public bool clickToContinue = false;
+	public bool hideWhenFinished = true;
 	private bool continueStory = true;
 
 	private Coroutine refreshCoroutine;
@@ -72,10 +77,15 @@ public class InkWriter : MonoBehaviour {
 			ActivateContinueButton (false);
 		}
 		continueButton.onClick.AddListener (OnClickContinueButton);
+		// Find canvas group of writer canvas
+		if (writerCanvas != null) {
+			writerCanvasGroup = writerCanvas.GetComponent<CanvasGroup> ();
+		}
 	}
 
 	// Creates a new Story object with the compiled story which we can then play!
 	void StartStory () {
+		HideCanvas (false);
 		lastText = "";
 		lastSaveableTags = "";
 		story = new Story (inkStoryObject.inkJsonAsset.text);
@@ -174,18 +184,26 @@ public class InkWriter : MonoBehaviour {
 		else {
 			if (mainWriter) {
 				SaveStory ();
-				Button choice = CreateChoiceView ("End of story.\nRestart?");
-				cachedButtons.Add (choice);
-				choice.onClick.AddListener (delegate {
-					ResetStory ();
-				});
-			};
-			/*Button choice2 = CreateChoiceView ("Reset story");
-			choice2.onClick.AddListener (delegate {
-				ResetStory ();
-			});
-			cachedButtons.Add (choice2);*/
+				if (hideWhenFinished) {
+					HideCanvas (true);
+				} else { // PROBABLY CHANGE THIS LOL.
+					Button choice = CreateChoiceView ("End of story.\nRestart?");
+					cachedButtons.Add (choice);
+					choice.onClick.AddListener (delegate {
+						ResetStory ();
+					});
+				}
+			} else {
+				if (hideWhenFinished) {
+					HideCanvas (true);
+				}
+			}
 		}
+		/*Button choice2 = CreateChoiceView ("Reset story");
+		choice2.onClick.AddListener (delegate {
+			ResetStory ();
+		});
+		cachedButtons.Add (choice2);*/
 		// Move scrollbar
 		MoveScrollBar (true);
 	}
@@ -344,6 +362,7 @@ public class InkWriter : MonoBehaviour {
 	public void GoToKnot (string knot) {
 		lastText = "";
 		story.ChoosePathString (knot);
+		HideCanvas (false);
 		RefreshView ();
 	}
 
@@ -397,6 +416,11 @@ public class InkWriter : MonoBehaviour {
 
 	void MoveScrollBar (bool move) {
 		autoScroll = move;
+	}
+
+	public void HideCanvas (bool hide) {
+		writerCanvasGroup.alpha = hide ? 0f : 1f;
+		writerCanvasGroup.interactable = !hide;
 	}
 
 	void Update () {
