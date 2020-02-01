@@ -23,6 +23,7 @@ public class InkWriter : MonoBehaviour {
 
 	[SerializeField]
 	private Canvas writerCanvas;
+	[SerializeField]
 	private CanvasGroup writerCanvasGroup;
 
 	[SerializeField]
@@ -42,6 +43,8 @@ public class InkWriter : MonoBehaviour {
 	public Button continueButton;
 	public bool clickToContinue = false;
 	public bool hideWhenFinished = true;
+
+	public bool clearOnNewStory = true;
 	private bool continueStory = true;
 
 	private Coroutine refreshCoroutine;
@@ -72,7 +75,7 @@ public class InkWriter : MonoBehaviour {
 
 	void Start () {
 		RemoveChildren ();
-		Invoke ("StartStory", 0.1f);
+		//Invoke ("StartStory", 0.1f);
 		if (!clickToContinue) {
 			ActivateContinueButton (false);
 		}
@@ -84,8 +87,13 @@ public class InkWriter : MonoBehaviour {
 	}
 
 	// Creates a new Story object with the compiled story which we can then play!
-	void StartStory () {
+	public void StartStory () {
 		HideCanvas (false);
+
+		if (clearOnNewStory) {
+			ClearChildren ();
+		}
+
 		lastText = "";
 		lastSaveableTags = "";
 		story = new Story (inkStoryObject.inkJsonAsset.text);
@@ -105,7 +113,7 @@ public class InkWriter : MonoBehaviour {
 	}
 
 	[EasyButtons.Button]
-	void ResetStory () {
+	public void ResetStory () {
 		lastText = "";
 		for (int i = 0; i < tagsToSave.Length; i++) {
 			tagsToSave[i] = "";
@@ -343,12 +351,17 @@ public class InkWriter : MonoBehaviour {
 	}
 
 	[EasyButtons.Button]
-	void SaveStory () {
+	public void SaveStory () {
 		PlayerPrefs.SetString (inkStoryObject.storyName + "savedInkStory", story.state.ToJson ());
 		PlayerPrefs.SetString (inkStoryObject.storyName + "lastSavedTextChunk", lastText);
 		SerializeSavedTags ();
 		PlayerPrefs.SetString (inkStoryObject.storyName + "lastSavedTags", lastSaveableTags);
 		Debug.Log ("Tags at save point: " + lastSaveableTags);
+	}
+
+	[EasyButtons.Button]
+	public void LoadStory () {
+		StartStory ();
 	}
 	void PauseStory () {
 		SaveStory ();
@@ -364,6 +377,16 @@ public class InkWriter : MonoBehaviour {
 		story.ChoosePathString (knot);
 		HideCanvas (false);
 		RefreshView ();
+		if (clearOnNewStory) {
+			ClearChildren ();
+		}
+	}
+
+	void ClearChildren () {
+		int childCount = textArea.transform.childCount;
+		for (int i = childCount - 1; i >= 0; --i) {
+			GameObject.Destroy (textArea.transform.GetChild (i).gameObject);
+		}
 	}
 
 	// Creates a button showing the choice text
@@ -419,8 +442,10 @@ public class InkWriter : MonoBehaviour {
 	}
 
 	public void HideCanvas (bool hide) {
+		GameManager.instance.PauseGame (!hide);
 		writerCanvasGroup.alpha = hide ? 0f : 1f;
 		writerCanvasGroup.interactable = !hide;
+		writerCanvasGroup.blocksRaycasts = !hide;
 	}
 
 	void Update () {
