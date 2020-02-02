@@ -38,8 +38,10 @@ public class GameManager : MonoBehaviour {
             LoadGame ();
         } else {
             InkWriter.main.StartStory ();
-            UIManager.instance.Init ();
+
         }
+        yield return new WaitForSeconds (1f);
+        UIManager.instance.Init ();
         // };
     }
     public void PauseGame (bool pause) {
@@ -58,7 +60,7 @@ public class GameManager : MonoBehaviour {
     public void LoadGame () {
         Debug.Log ("Loading game!");
         InkWriter.main.LoadStory ();
-        UIManager.instance.Init ();
+        //UIManager.instance.Init ();
         Transform player = GameObject.FindGameObjectWithTag ("Player").transform;
         Vector3 playerNewPos = new Vector3 { };
         playerNewPos.x = PlayerPrefs.GetFloat ("GGJ2020_playerLocation_x");
@@ -79,6 +81,14 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.SetFloat ("GGJ2020_playerLocation_z", 0f);
         PlayerPrefs.SetFloat ("GGJ2020_playerLocation_y", 0f);
         Restart ();
+    }
+
+    public void WinGame () {
+        InkWriter.main.ResetStory ();
+        PlayerPrefs.SetFloat ("GGJ2020_playerLocation_x", 0f);
+        PlayerPrefs.SetFloat ("GGJ2020_playerLocation_z", 0f);
+        PlayerPrefs.SetFloat ("GGJ2020_playerLocation_y", 0f);
+        SceneManager.LoadScene ("EndScene");
     }
 
     public void QuitGame () {

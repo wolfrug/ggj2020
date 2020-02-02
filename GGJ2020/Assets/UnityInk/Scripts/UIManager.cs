@@ -100,6 +100,10 @@ public class UIManager : MonoBehaviour {
         GameManager.instance.QuitGame ();
     }
 
+    public void WinGame () {
+        GameManager.instance.WinGame ();
+    }
+
     // Update is called once per frame
     void Update () {
 

@@ -7,7 +7,14 @@ VAR insight = 0
 VAR mettle = 0
 VAR candour = 0
 VAR theurgy = 0
-VAR coins = 0
+
+VAR obols = 0
+VAR honey = 0
+VAR nacre = 0
+VAR token = 0
+VAR snippet = 0
+
+VAR fragments = 0
 
 // does a skillcheck and returns either true or false. Does not change the skill's value
 // use (name of skill, difficulty of challenge)

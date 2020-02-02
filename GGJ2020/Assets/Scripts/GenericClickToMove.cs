@@ -16,6 +16,7 @@ public class GenericClickToMove : MonoBehaviour {
     public bool hitEveryOtherLayer = false;
 
     public GameObject clickToMoveObject;
+    public GameObject clickToMoveFailedObject;
 
     [SerializeField]
     private bool active = true;
@@ -53,8 +54,20 @@ public class GenericClickToMove : MonoBehaviour {
             //Invoke ("LateStartMove", 0.1f);
             isMoving = true;
         } else {
+
+            if (clickToMoveFailedObject != null) {
+                //clickToMoveFailedObject.GetComponent<Animator> ().SetBool ("Active", true);
+                clickToMoveFailedObject.SetActive (true);
+                clickToMoveFailedObject.transform.position = (Vector2) Camera.main.ScreenToWorldPoint (Input.mousePosition);
+                //clickToMoveFailedObject.transform.position = new Vector3 (clickToMoveFailedObject.transform.position.x, clickToMoveFailedObject.transform.transform.position.y, 0f);
+                Invoke ("DisableClickLocation", 0.5f);
+            }
             //Debug.Log ("hit nothing!");
         }
+    }
+
+    void DisableClickLocation () {
+        clickToMoveFailedObject.SetActive (false);
     }
 
     void LateStartMove () {
@@ -72,7 +85,7 @@ public class GenericClickToMove : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (active) {
+        if (active && !GameManager.instance.paused) {
             if (Input.GetAxis ("Fire1") > 0f) {
                 // Moving by clicking left
                 CastRay ();

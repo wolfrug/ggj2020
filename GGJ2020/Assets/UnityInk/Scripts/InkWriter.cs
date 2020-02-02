@@ -451,7 +451,7 @@ public class InkWriter : MonoBehaviour {
 	void Update () {
 		if (scrollView != null) {
 			if (scrollView.verticalNormalizedPosition > 0f && autoScroll) {
-				scrollView.verticalNormalizedPosition = -0.01f;
+				scrollView.verticalNormalizedPosition =- 0.01f;
 			} else if (scrollView.verticalNormalizedPosition <= 0f && autoScroll) {
 				autoScroll = false;
 			}

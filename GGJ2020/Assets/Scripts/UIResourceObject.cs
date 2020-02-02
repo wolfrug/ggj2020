@@ -33,6 +33,7 @@ public class UIResourceObject : MonoBehaviour {
         amounttext.text = value.ToString ();
     }
     public void SetValueToInkValue () {
+        //Debug.Log ("This is " + gameObject.name + " trying to set the value " + inkVariableName + " to its ink value in the story " + InkWriter.main.story + ". The variable is: " + InkWriter.main.story.variablesState[(inkVariableName)]);
         int currentValue = (int) InkWriter.main.story.variablesState[(inkVariableName)];
         SetValue (currentValue);
     }
