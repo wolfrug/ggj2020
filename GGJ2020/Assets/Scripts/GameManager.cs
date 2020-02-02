@@ -7,24 +7,40 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance;
     public bool paused = false;
 
-    public GenericClickToMove playerController;
+    public GenericClickToMove playerControllerVar;
     public bool disableControls = false;
     void Awake () {
         if (instance == null) {
             instance = this;
+            //DontDestroyOnLoad (gameObject);
         } else {
-            Destroy (this);
+            Destroy (gameObject);
+        }
+
+    }
+    GenericClickToMove playerController {
+        get {
+            if (playerControllerVar == null) {
+                playerControllerVar = GameObject.FindGameObjectWithTag ("Player").GetComponent<GenericClickToMove> ();
+            }
+            return playerControllerVar;
         }
     }
     // Start is called before the first frame update
-    void Start () {
+    IEnumerator Start () {
+        yield return new WaitForEndOfFrame ();
+        Debug.Log ("WHAT");
+        //Debug.Log ("Loaded:" + scene.name);
+        //if (scene.name == "SampleScene") {
+
         float playerLocation = PlayerPrefs.GetFloat ("GGJ2020_playerLocation_x");
         if (playerLocation != 0f) {
             LoadGame ();
+        } else {
+            InkWriter.main.StartStory ();
+            UIManager.instance.Init ();
         }
-        else {
-            InkWriter.main.StartStory();
-        }
+        // };
     }
     public void PauseGame (bool pause) {
         paused = pause;
@@ -42,6 +58,7 @@ public class GameManager : MonoBehaviour {
     public void LoadGame () {
         Debug.Log ("Loading game!");
         InkWriter.main.LoadStory ();
+        UIManager.instance.Init ();
         Transform player = GameObject.FindGameObjectWithTag ("Player").transform;
         Vector3 playerNewPos = new Vector3 { };
         playerNewPos.x = PlayerPrefs.GetFloat ("GGJ2020_playerLocation_x");

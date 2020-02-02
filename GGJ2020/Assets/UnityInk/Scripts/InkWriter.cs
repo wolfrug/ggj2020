@@ -191,7 +191,7 @@ public class InkWriter : MonoBehaviour {
 		// If we've read all the content and there's no choices, the story is finished!
 		else {
 			if (mainWriter) {
-				SaveStory ();
+				//SaveStory ();
 				if (hideWhenFinished) {
 					HideCanvas (true);
 				} else { // PROBABLY CHANGE THIS LOL.

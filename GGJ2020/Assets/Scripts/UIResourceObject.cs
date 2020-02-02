@@ -12,9 +12,9 @@ public class UIResourceObject : MonoBehaviour {
     public int currentValue = 0;
     // Start is called before the first frame update
     void Start () {
-        Invoke ("LateStart", 0.5f);
+        //Invoke ("LateStart", 0.5f);
     }
-    void LateStart () {
+    public void Init () {
         SetValueToInkValue ();
         if (inkVariableName != "") {
             InkWriter.main.story.ObserveVariable ((inkVariableName), (string varName, object newValue) => {

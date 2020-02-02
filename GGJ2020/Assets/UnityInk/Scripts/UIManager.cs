@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour {
     public static UIManager instance;
     public InkCharacterObject[] characters;
     public Transform portraitParent;
+    [SerializeField]
+    private UIResourceObject[] allResourceObjects;
     private Dictionary<string, ProgressBar> progressBars = new Dictionary<string, ProgressBar> { };
     private Dictionary<string, InkCharacterObject> charactersDict = new Dictionary<string, InkCharacterObject> { };
     private Dictionary<InkCharacterObject, GameObject> spawnedPortraits = new Dictionary<InkCharacterObject, GameObject> { };
@@ -21,6 +23,12 @@ public class UIManager : MonoBehaviour {
     void Start () {
         foreach (InkCharacterObject ico in characters) {
             charactersDict.Add (ico.characterName, ico);
+        }
+        allResourceObjects = FindObjectsOfType<UIResourceObject> ();
+    }
+    public void Init () {
+        foreach (UIResourceObject obj in allResourceObjects) {
+            obj.Init ();
         }
     }
 
@@ -66,6 +74,30 @@ public class UIManager : MonoBehaviour {
         foreach (KeyValuePair<InkCharacterObject, GameObject> entry in spawnedPortraits) {
             entry.Value.SetActive (false);
         }
+    }
+
+    public void PauseGame (bool pause) {
+        GameManager.instance.PauseGame (pause);
+    }
+
+    public void SaveGame () {
+        GameManager.instance.SaveGame ();
+    }
+    public void LoadGame () {
+        GameManager.instance.LoadGame ();
+    }
+
+    public void Restart () {
+        GameManager.instance.Restart ();
+    }
+
+    [EasyButtons.Button]
+    public void ResetGame () {
+        GameManager.instance.ResetGame ();
+    }
+
+    public void QuitGame () {
+        GameManager.instance.QuitGame ();
     }
 
     // Update is called once per frame

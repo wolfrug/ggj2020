@@ -69,6 +69,7 @@ public class TagListener : MonoBehaviour {
         foreach (SpawnableObject so in storyObjects) {
             storyObjectDict.Add (so.refTag, so);
         }
+        //Debug.Log("Begin listening to tags", gameObject);
         InkWriter.main.tagEvent.AddListener (TagListenerFunction);
     }
 
