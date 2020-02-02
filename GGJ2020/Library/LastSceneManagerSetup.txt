@@ -5,3 +5,6 @@ sceneSetups:
 - path: Assets/UnityInk/Scenes/SampleScene.unity
   isLoaded: 0
   isActive: 0
+- path: Assets/Scenes/EndScene.unity
+  isLoaded: 0
+  isActive: 0
