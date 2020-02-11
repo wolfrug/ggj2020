@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour {
     public static UIManager instance;
     public InkCharacterObject[] characters;
     public Transform portraitParent;
+    public GameObject[] fragmentPieces;
+    public Animator fragmentAnimator;
     [SerializeField]
     private UIResourceObject[] allResourceObjects;
     private Dictionary<string, ProgressBar> progressBars = new Dictionary<string, ProgressBar> { };
@@ -25,11 +27,19 @@ public class UIManager : MonoBehaviour {
             charactersDict.Add (ico.characterName, ico);
         }
         allResourceObjects = FindObjectsOfType<UIResourceObject> ();
+
     }
     public void Init () {
         foreach (UIResourceObject obj in allResourceObjects) {
             obj.Init ();
         }
+        // Set the current nr of fragments correctly
+        int currentValue = (int) InkWriter.main.story.variablesState[("fragments")];
+        if (currentValue > 0) {
+            for (int i = 1; i <= currentValue; i++) {
+                ActivateFragmentPiece ("dummy", i);
+            }
+        };
     }
 
     public void AddProgressBar (ProgressBar bar) {
@@ -68,6 +78,10 @@ public class UIManager : MonoBehaviour {
             spawnedPortraits.Add (outVar, newPortrait);
         }
 
+    }
+    public void ActivateFragmentPiece (string tag, int nr) {
+        fragmentAnimator.SetTrigger ("activate");
+        fragmentPieces[nr - 1].SetActive (true);
     }
 
     void DeactivatePortraits () {

@@ -1,5 +1,6 @@
 INCLUDE ggj2020_functions.ink
-VAR debug = false
+
+VAR debug = true
 {debug:
 ~insight = 1
 ~token = 8
@@ -10,9 +11,10 @@ VAR debug = false
 ~snippet = 8
 ~mettle = 3
 
-->apiary
+->start
 }
 == start
+
 #changebackground #spawn.background.church #play.earthquake
 An Un-God has emerged from the cthonic bowls of the city, ripping apart the sacred halls of the Church of Marrow, and breaking the seal of the Sacred Dead which kept the unquiet hordes at bay.
 
@@ -26,10 +28,9 @@ You have been tasked with overseeing the repairs.
 
 But in order to do that, you'll need to convince everyone to work together.
 
-*[Easier said than done.]-> professions
+*[Easier said than done.]-> professions 
 
 == professions
-
 You are the Arbiter, but before that you were...
 
 *[a Hunter.]
@@ -91,7 +92,6 @@ Where most must study for decades to foster the spark of magic, to you it came a
 *[You have a job to do.] Time is of the essence. ->intro
 
 = intro
-
 The Church of the Marrow stands before you - or at least what's left of it. 
 
 When the Un-God breached the earth, it brought down most of the east wing with it.
@@ -107,7 +107,6 @@ Your business lies elsewhere - for now.
 *[Keep walking.] ->church
 
 == church
- 
 Bone-dust drifts through the air like snow, filtered through the light of the jagged fibula that arch precariously overhead.
 
 The Priest is waiting for you in the remains of the apsis, his lips moving in quiet prayer as he genuflects before the shattered altar. 
@@ -187,9 +186,11 @@ The Priest shuffles his feet, uncomfortable in the face of your open scrutiny.
 
 =endconversation
 You promise to return once you’ve made some progress. #changebackground
+
 ->DONE
 
 == atheneum
+{enterLocation(loc_atheneum)}
 {atheneum<2: 
 The Atheneum sits, stout and sombre, in the sacrum, before you. Outside, dour-looking Inquisitors congregate, truncheons in hand, looking more like thugs than church officials. Inside the so-called Heretics dwell, somehow sometimes managing to release a pamphlet containing the most shocking heresy to the world, despite the blockade.
 
@@ -205,9 +206,14 @@ For a supposed hive of hereticism and villainy, the Atheneum is uncommonly tidy.
 }
 ->options
 =options
++ {timeSinceVisited>2}[(This option only available after time as passed!)]
+How exciting. By zeroing timeSinceVisited, we can prevent this from happening until next time!
+~timeSinceVisited = 0
+->options
 + {rector && not nacre_done}[Deliver the nacre to the Rector. {displayCheck(nacre, 10)}]->nacre_check
 + {nacre_done && not tokens_done}[Hand over the  Royal Tokens to the Rector. {displayCheck(token, 10)}]->tokens_check
-+ [Attend a lecture (Insight: {displayCheck(insight, 6)}]
++ [Attend a lecture (Insight: {displayCheck(insight, 6)}{displayTime(1)}]
+{passTime(1)}
 {~The lecturer suggests nacre is proof that God was a beetle. The hall erupts in murmuring.|A debate about the true nature of the diet of bees devolves into name-calling.|A professor of Ossiology lectures at length about the number of teeth in the Mouth.|The lecture has an apocalyptic mood: someone suggests the breaking of the Seal might lead to things that should be dead no longer remaining dead.|”Is it not so,” The Annelidae Lecturer states. “That the Church hates the Boneless God specifically because It does not have bones, not because of anything in particular this so-called God has done?”}
 {skillCheck(insight, 6):
 You listen with interest.
@@ -218,7 +224,7 @@ The argument seems unnecessarily esoteric. You soon find your eyelids grow heavy
 }
 ->options
 + [Leave.]
-You quietly leave the venerable halls of learning. ->DONE
+You quietly leave the venerable halls of learning. ->leave
 * [Speak with the Enthusiastic Rector]->rector
 = rector
     You are admitted into the Rector’s office on the second floor. It would have a fine view, if the windows were not barred and barricaded with planks. The Rector makes no mention of it.
@@ -253,24 +259,34 @@ The Rector counts the tokens, then recounts them. He looks giddy with excitement
 He gets up and almost runs off, before noticing you still standing there. “Oh, right! Your, ah, seal fragment. It’s in my desk there.” He points, then runs out into the corridor, shouting for his staff.
 
 You go to the desk and open the drawers. Amongst various bits of esoterica, much of it entirely illegal, you find a seal fragment. Why he had it, and why he kept it in his desk, you may never know. {alter(fragments, 1)}
+
+->leave
+
+=leave
+{exitLocation(loc_atheneum)}
 ->DONE
 
 ==palace
+{enterLocation(loc_palace)}
 {palace<2:
 You walk up the stairs of the lower mandible, and find yourself before the gates of the Buccal Palace. It rises before you, a necrotic husk, bone-white and imposing. The very walls seem to creak with the weight of years, and the great crest of the maxilla arches overhead, casting its long shadow over the city below.
-
-As you pass through the desiccated hallways, you can’t help but wonder at how desolate it all seems. If you didn’t know better, you’d assume the place was abandoned.
 }
+As you pass through the desiccated hallways, you can’t help but wonder at how desolate it all seems. If you didn’t know better, you’d assume the place was abandoned.
+
+
 ->options
 =options
+
 + [Leave.]
-You gladly leave the stagnant, dusty halls of the sclerotic noblesse behind. ->DONE
+You gladly leave the stagnant, dusty halls of the sclerotic noblesse behind. 
+->leave
 + {steward && not resource_done}[Deliver honey to the steward. {displayCheck(honey, 10)}]
 ->resource_check_honey
 + {steward && not resource_done}[Deliver obols to the steward. {displayCheck(obols, 10)}]
 ->resource_check_obols
 
-+ [Ingratiate yourself with the atonic nobility. (Artifice: {displayCheck(artifice, 6)}]
++ [Ingratiate yourself with the atonic nobility. (Artifice: {displayCheck(artifice, 6)}{displayTime(1)}]
+{passTime(1)}
 {~You make smalltalk with some listless aristocratic youths.|You spend half an hour discussing the finer points of genealogy with an elderly patrician.}
 {skillCheck(artifice, 6):
 Against all odds you manage to gain some useful information from the encounter.
@@ -337,8 +353,13 @@ You hold out a hand expectantly, and the Steward huffs.
 You wouldn’t go that far. But you’ll be glad to see the back of him. As you leave you notice there is something else hiding amidst the tokens. A seal fragment. Perhaps the Steward wasn’t so bad after all. {alter(fragments, 1)}
 ->options
 
+=leave
+{exitLocation(loc_palace)}
+->DONE
 
 ==cenotaph
+{enterLocation(loc_cenotaph)}
+{alter(cenotaphTimer, -timeSinceVisited)}
 {cenotaph<2:
 You step into the dark hollow, eyes adjusting to the gloom. Before you lies the cenotaph of the Boneless God; a monument bound in heavy chains. Underneath the statue of the chained worm the Guilds have set up a lively marketplace, the stalls dimly lit with lanterns.
 }
@@ -349,16 +370,22 @@ Everywhere you hear the soft clink of silver obols; funerary coins, stolen from 
 ->options
 =options
 + [Leave.]
-You turn around and leave the bustling market, for now.->DONE
+You turn around and leave the bustling market, for now. ->leave
 
++ {cenotaphTimer <= 0} [This only exists if the last time this was touched was 5 turns spent outside of Cenotaph ago!]
+~cenotaphTimer = 5
+Horaay!
+->options
 + {mendicant_honey_done && not mendicant_token_done} [Return to the Mad Mendicant with proof of the Palace's favor. {displayCheck(token, 10)}]->mendicant_token_check
 + {mendicant && not mendicant_honey_done} [Return to the Mad Mendicant with a gift of Bone Honey. {displayCheck(honey, 10)}]->mendicant_honey_check
-+ {mendicant} [Help the merchants mediate their squabbles.(Candour: {displayCheck(candour, 6)})]
++ {mendicant} [Help the merchants mediate their squabbles.(Candour: {displayCheck(candour, 6)}{displayTime(1)})]
+{passTime(1)}
 {skillCheck(candour, 6):
 {~Your help is much appreciated.{alter(obols, 3)}|You manage to solve a long-standing grudge. Both sides pay you well.{alter(obols, 6)}|Despite your best efforts, neither side walks away happy. The bystanders pay you for the entertainment.{alter(obols, 1)}|You listen for half an hour at an angry merchantwoman talk about her husband. Afterwards, she pays you handsomely.{alter(obols, 5)}}
 -else:
 {~Your lack of social graces leads to the squabbles becoming more, rather than less, intense.|Your attempts at mending a long-standing grudge only leads to it becoming worse.|Within minutes, you are entirely forgotten in a shouting match between two merchants.|You attempt to give some advice to an angry merchantwoman, but the moment you speak she goes beet red and leaves in a huff.|The parties in the argument end up in a street fight. {~Someone slips you an obol as a payment for providing entertainment.{alter(obols, 1)}|While you weren't looking, someone rifled through your purse!{alter(obols, -1)}}}
 }
+
 ->options
 *[Explore the market]
 You take your time, walking between stalls. Most recognize you as the Arbiter, but that carries little weight here. Your kind rarely offers arbitration for their kind; yours is a Royal office, after all.
@@ -427,14 +454,17 @@ From underneath the ratty tapestry, he produces what he promised. It glows faint
 "Soon, we will be one with the Boneless One. We, too, shall slither into the Earth and join Him, and leave this calcified purgatory for good. One way we may meet again, Arbiter, but you should hope we do not.
 
 * [Leave the madman to his doom.]
-You turn and leave, quickly. Behind you, the Mad Mendicant melts. His screams follow you as you escape. ->DONE
+You turn and leave, quickly. Behind you, the Mad Mendicant melts. His screams follow you as you escape. ->leave
 * [Ask him what he is doing.]
 "We are descending. Soon we will be emptied of our useless bones. On this place, we will become one with the Boneless One." His smile is even more terrifying than it was before. His features seem to melt, his skin sag. "Ahhh, the pain...it is exquisite!"
 ** [Leave the madman to his doom.]
-You turn and leave, quickly. Behind you, the Mad Mendicant melts. His screams follow you as you escape. ->DONE
-->DONE
+You turn and leave, quickly. Behind you, the Mad Mendicant melts. His screams follow you as you escape. ->leave
 
+=leave
+{exitLocation(loc_cenotaph)}
+->DONE
 ==necropolis
+{enterLocation(loc_necropolis)}
 {necropolis<2:
 The climb to the top of the hill left you feeling out of breath, and you take a moment to rest, and to admire the view. Below you can see the valley stretch out, each aspect taking its name from its anatomical neighbour. The Buccal Palace. The Apiary of the Intercostal Sisterhood. And the Marrow Church, even in its ruined state. The Necropolis is above and beyond all that; outside the embrace of the Body of God. An appropriate place to store the dead.
 }
@@ -443,10 +473,11 @@ The Necropolis is not a place of rest for now, however, but a battlefield. As yo
 ->options
 =options
 + [Leave.]
-You leave the Necropolis and its battlefield behind. ->DONE
+You leave the Necropolis and its battlefield behind. ->leave
 + {commander && not obols_done}[Return with silver obols for the Steward. {displayCheck(obols, 10)}]->obols_check
 + {obols_done && not snippets_done}[Use what you have learned to find the Metatarsal Vault. {displayCheck(snippet, 10)}]->snippets_check
-+ [Assist in the defence against the restless dead. (Theurgy: {displayCheck(theurgy, 6)})]
++ [Assist in the defence against the restless dead. (Theurgy: {displayCheck(theurgy, 6)}){displayTime(1)}]
+{passTime(1)}
 {skillCheck(theurgy, 6):
 {~You stand side-by-side with the Warrior-Clerics, joining your magic to theirs. The shambling corpses crumble before you.|You summon a gust of wind with a prayer. It rips a skeletal warrior apart, the bones clattering to the marble floor.|A hail of arrows! At the last instance you summon up a shield; the arrows bounce harmlessly off it.|You go among the wounded, healing their wounds where you can.|You sense the spectre before you see it. With a whispered word, your magic ignites it. You watch as it flees, burning, into the ossuary.}
 ~temp gainz = RANDOM(1,6)
@@ -496,9 +527,14 @@ Somehow, what you learned from the scholars actually translated into something p
 
 “Ah. About time. And the Arbiter.” The Commander nods at you. “Glad you found your way here. Now I don’t have to trek all the way up to hand you this.” She holds out a Seal fragment. It is dusty - ancient - yet clearly still a part of the same design. You take it gratefully, feeling like you missed out on some grand adventure. {alter(fragments, 1)}. 
 
-You make your way back up to the surface, fragment in hand.->DONE
+You make your way back up to the surface, fragment in hand.->leave
+
+=leave
+{exitLocation(loc_necropolis)}
+->DONE
 
 ==apiary
+{enterLocation(loc_apiary)}
 {apiary<2:
 The Apiary of the Intercostal Sisterhood lies nestled in the foothills beneath the Ribs of the city, white smoke drifts lazily into the air above the Apiary grounds. The nuns use the soporific fumes to lull the bees while they extract the sacred substance from the honeycombed furrows of bone that make up the hives.
 }
@@ -509,13 +545,14 @@ A nun meets you at the gate, and unlocks the heavy chains, granting you access t
 ->options
 =options
 +[Leave]
-Perhaps this isn’t the best time. You leave the bustle of the Apiary behind you, for now.->DONE
+Perhaps this isn’t the best time. You leave the bustle of the Apiary behind you, for now. ->leave
 
 + {nacre_done && not snippet_done} [Return to Abbess with the information she requested.{displayCheck(snippet, 10)}]->snippet_check
 
 + {abbess && not nacre_done} [Return to the Abbess with the nacre. {displayCheck(nacre, 10)}]->nacre_check
 
-+{abbess} [Help the nuns contain a swarm of angry bone-bees.(Mettle: {displayCheck(mettle, 6)})]
++{abbess} [Help the nuns contain a swarm of angry bone-bees.(Mettle: {displayCheck(mettle, 6)}){displayTime(1)}]
+{passTime(1)}
 {skillCheck(mettle, 6):
 {~You don’t really know what you’re doing, but you muddle by, and hardly anyone gets stung. The nuns offer you honey in exchange for your labour.{alter(honey, 3)}|It’s like you were born for this. Together you and the nuns lull the swarm into quiescence. Their angry buzzing fades and grows still. The nuns invite you out for a drink of mead, and you spend the afternoon swapping war-stories. {alter(honey, 6)}|You wade into the fray, and the bees start stinging you with great enthusiasm. You just end up getting in the way, but you still receive a jar of honey for your efforts.{alter(honey, 1)}| The bees prove recalcitrant, but you triumph in the end. The nuns seem quietly impressed.{alter(honey, 5)}}->options
 -else:
@@ -585,10 +622,14 @@ The Abbess retrieves something from another drawer in the desk, and presses the 
 “Here, as a token of my thanks..”She says with a wink, and departs, leaving teh room colder in her abscence.
 
 You examine the object in your hand, and are surprised to find that it’s a small seal fragment. You think you see a bee carved into the markings on one side. It makes you smile. {alter(fragments, 1)}
+->leave
 
+=leave
+{exitLocation(loc_apiary)}
 ->DONE
 
 ==church_of_the_marrow
+{enterLocation(loc_church)}
 {fragments>0:
 You return to the Church of the Marrow with your collected seal fragments. The most important task of all still lies before you.
 
@@ -600,11 +641,15 @@ How do you wish to proceed?
 
 *[Attempt to re-sanctify the church and restore the seal, whatever the cost.{displayCheck(fragments, 5)}]->sanctify
 
-+[Maybe not just yet, you have more work to do, and more seal fragments to gather.]->DONE
++[Maybe not just yet, you have more work to do, and more seal fragments to gather.]->leave
 -else:
 You return to the Church of the Marrow to gaze upon the shattered seal. To have any hope of repairing it, you will need to find Seal Fragments. Fragments that only the powerful and the influential have.
-+[You turn and leave.]->DONE
++[You turn and leave.]->leave  
 }
+=leave
+{exitLocation(loc_church)}
+->DONE
+
 =sanctify
 Night has fallen, and you avert your face from opening in the roof of the church, lest you glimpse the burning eyes of the stars far above.
 

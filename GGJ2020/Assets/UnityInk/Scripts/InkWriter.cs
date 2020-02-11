@@ -13,6 +13,9 @@ using UnityEngine.UI;
 [System.Serializable]
 public class TagFoundEvent : UnityEvent<string> { }
 
+[System.Serializable]
+public class TextTagFoundEvent : UnityEvent<string> { }
+
 public class InkWriter : MonoBehaviour {
 
 	public static InkWriter main;
@@ -49,6 +52,8 @@ public class InkWriter : MonoBehaviour {
 
 	private Coroutine refreshCoroutine;
 	public TagFoundEvent tagEvent;
+
+	public TextTagFoundEvent textTagEvent;
 
 	public TMPLinkClickedEvent linkClickedEvent;
 
@@ -389,7 +394,7 @@ public class InkWriter : MonoBehaviour {
 		}
 	}
 
-	// Creates a button showing the choice text
+	// Creates a piece of text
 	void CreateContentView (string text, Transform parent) {
 		TextMeshProUGUI storyText = Instantiate (textPrefab) as TextMeshProUGUI;
 		storyText.text = text;
@@ -406,7 +411,6 @@ public class InkWriter : MonoBehaviour {
 		// Creates the button from a prefab
 		Button choice = Instantiate (buttonPrefab) as Button;
 		choice.transform.SetParent (textArea.transform, false);
-
 		// Gets the text from the button prefab
 		TextMeshProUGUI choiceText = choice.GetComponentInChildren<TextMeshProUGUI> ();
 		choiceText.text = text;
@@ -451,7 +455,7 @@ public class InkWriter : MonoBehaviour {
 	void Update () {
 		if (scrollView != null) {
 			if (scrollView.verticalNormalizedPosition > 0f && autoScroll) {
-				scrollView.verticalNormalizedPosition =- 0.01f;
+				scrollView.verticalNormalizedPosition = -0.01f;
 			} else if (scrollView.verticalNormalizedPosition <= 0f && autoScroll) {
 				autoScroll = false;
 			}

@@ -16,6 +16,86 @@ VAR snippet = 0
 
 VAR fragments = 0
 
+//Time stuff
+VAR currentTime = 0
+VAR timeSinceVisited = 0
+VAR palaceTimer = 0
+VAR cenotaphTimer = 0
+VAR necropolisTimer = 0
+VAR atheneumTimer = 0
+VAR apiaryTimer = 0
+
+
+
+LIST locationStatus = not_visited, current, last_visited, 1_turn_since, 2_turn_since, 3_turn_since, 4_turn_since, 5_turn_since, more_than_5_turn_since
+
+
+VAR loc_church = -1
+VAR loc_cenotaph = -1
+VAR loc_palace = -1
+VAR loc_atheneum = -1
+VAR loc_necropolis = -1
+VAR loc_apiary = -1
+
+===function enterLocation(ref location)===
+// put this at the entrance point to the location; use "timeSinceVisited" to check what the value was before
+~timeSinceVisited = turnsSinceVisited(location)
+~location = 0
+
+===function exitLocation(ref location)===
+// Put this at all exit points to the location
+~location = 1
+
+===function passLocationTime(time, ref location)===
+{location != 0 && location != -1:
+    ~location++
+}
+~time--
+{time > 0:
+    {passLocationTime(time, location)}
+}
+
+===function turnsSinceVisited(ref location)===
+// returns nr of turns (up to 5) since the last visit to the location
+~return location
+/*{location:
+- not_visited:
+~return -1
+- last_visited:
+~return 0
+- current:
+~return 0
+- 1_turn_since:
+~return 1
+- 2_turn_since:
+~return 2
+- 3_turn_since:
+~return 3
+- 4_turn_since:
+~return 4
+- 5_turn_since:
+~return 5
+- more_than_5_turn_since:
+~return 6
+-:
+~return -1
+}*/
+
+===function displayTime(time)===
+// Change the size. Also remember to adjust it for the final sprite(s)
+(<size=65><sprite name="tmp_time"></size>{time})
+
+===function passTime(time)===
+~currentTime +=time
+// Pass time at locations
+{time > 0:
+{passLocationTime(time, loc_church)}
+{passLocationTime(time, loc_cenotaph)}
+{passLocationTime(time, loc_palace)}
+{passLocationTime(time, loc_atheneum)}
+{passLocationTime(time, loc_necropolis)}
+{passLocationTime(time, loc_apiary)}
+}
 // does a skillcheck and returns either true or false. Does not change the skill's value
 // use (name of skill, difficulty of challenge)
 /*
